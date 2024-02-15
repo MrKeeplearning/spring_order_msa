@@ -1,0 +1,35 @@
+spring:
+  security:
+    user:
+      name: user
+      password: password #PasswordEncoder.encode(password)
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/ordering
+    username: root
+    password: 1234
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  # eureka 서버 아래에 application.name 으로 서비스명을 등록한다.
+  application:
+    name: order-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+server:
+  # 0번으로 port를 설정하면 자동으로 임의의 포트번호를 할당해준다.
+  port: 0

@@ -1,0 +1,21 @@
+// 자바스크립트 프로젝트의 컴파일러 옵션을 지정하는 파일
+// baseUrl과 paths옵션을 통해서 모듈 해석의 기준이 되는 기본 url path를 지정한다.
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  }
+}

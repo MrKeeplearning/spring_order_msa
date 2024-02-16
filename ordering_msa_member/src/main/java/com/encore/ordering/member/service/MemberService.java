@@ -58,4 +58,9 @@ public class MemberService {
         }
         return member;
     }
+
+    public MemberResponseDto findById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return MemberResponseDto.toMemberResponseDto(member);
+    }
 }

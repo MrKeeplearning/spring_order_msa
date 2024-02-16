@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -52,8 +53,13 @@ public class MemberController {
         return memberService.findById(id);
     }
 
+    @GetMapping("/member/findByEmail")
+    public MemberResponseDto findByEmail(@RequestParam String email) {
+        return memberService.findMyInfo(email);
+    }
+
     @GetMapping("/member/myInfo")
-    public MemberResponseDto findMyInfo(@RequestHeader("myEmail")String email) {
+    public MemberResponseDto findMyInfo(@RequestHeader("myEmail") String email) {
         return memberService.findMyInfo(email);
     }
 

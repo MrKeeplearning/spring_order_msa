@@ -1,6 +1,6 @@
 package com.encore.ordering.order.controller;
 
-import com.encore.ordering.order.domain.MemberDto;
+import com.encore.ordering.order.dto.MemberDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;

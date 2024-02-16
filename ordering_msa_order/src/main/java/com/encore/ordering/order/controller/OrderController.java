@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,9 +28,16 @@ public class OrderController {
     }
 
     @PostMapping("/order/create")
-    public ResponseEntity<CommonResponse> orderCreate(@RequestBody List<OrderReqDto> orderReqDtos) {
-        Ordering ordering = orderService.create(orderReqDtos);
-        CommonResponse commonResponse = new CommonResponse(HttpStatus.CREATED, "Order created successfully", ordering.getId());
+    public ResponseEntity<CommonResponse> orderCreate(
+            @RequestBody List<OrderReqDto> orderReqDtos,
+            @RequestHeader("myEmail")String email
+    ) {
+        Ordering ordering = orderService.create(orderReqDtos, email);
+        CommonResponse commonResponse = new CommonResponse(
+                HttpStatus.CREATED,
+                "Order created successfully",
+                ordering.getId()
+        );
         return new ResponseEntity<>(commonResponse, HttpStatus.CREATED);
     }
 

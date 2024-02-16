@@ -2,6 +2,7 @@ package com.encore.ordering.item.controller;
 
 import com.encore.ordering.common.CommonResponse;
 import com.encore.ordering.item.domain.Item;
+import com.encore.ordering.item.dto.ItemQuantityUpdateDto;
 import com.encore.ordering.item.dto.ItemReqDto;
 import com.encore.ordering.item.dto.ItemResDto;
 import com.encore.ordering.item.dto.ItemSearchDto;
@@ -19,16 +20,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class ItemController {
 
     private final ItemService itemService;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, RestTemplate restTemplate) {
         this.itemService = itemService;
+        this.restTemplate = restTemplate;
     }
 
     @PostMapping("/item/create")
@@ -56,6 +61,19 @@ public class ItemController {
     public ResponseEntity<CommonResponse> itemUpdate(@PathVariable Long id, ItemReqDto itemReqDto) {
         Item item = itemService.update(id, itemReqDto);
         CommonResponse commonResponse = new CommonResponse(HttpStatus.OK, "Item updated successfully", item.getId());
+        return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/item/{id}")
+    public ResponseEntity<ItemResDto> findById(@PathVariable Long id) {
+        ItemResDto itemResDto = itemService.findById(id);
+        return new ResponseEntity<>(itemResDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/item/updateQuantity")
+    public ResponseEntity<CommonResponse> itemUpdateQuantity(@RequestBody List<ItemQuantityUpdateDto> itemQuantityUpdateDtos) {
+        itemService.updateQuantity(itemQuantityUpdateDtos);
+        CommonResponse commonResponse = new CommonResponse(HttpStatus.OK, "Item updated successfully", null);
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
 

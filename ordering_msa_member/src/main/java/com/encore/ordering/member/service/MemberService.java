@@ -63,4 +63,5 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return MemberResponseDto.toMemberResponseDto(member);
     }
+
 }

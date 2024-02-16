@@ -1,6 +1,7 @@
 package com.encore.ordering.item.service;
 
 import com.encore.ordering.item.domain.Item;
+import com.encore.ordering.item.dto.ItemQuantityUpdateDto;
 import com.encore.ordering.item.dto.ItemReqDto;
 import com.encore.ordering.item.dto.ItemResDto;
 import com.encore.ordering.item.dto.ItemSearchDto;
@@ -134,5 +135,25 @@ public class ItemService {
                 .imagePath(item.getImagePath())
                 .build()).collect(Collectors.toList());
         return itemResDtos;
+    }
+
+    public ItemResDto findById(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        ItemResDto itemResDto = ItemResDto
+                .builder()
+                .id(item.getId())
+                .category(item.getCategory())
+                .stockQuantity(item.getStockQuantity())
+                .price(item.getPrice())
+                .build();
+        return itemResDto;
+    }
+
+    public void updateQuantity(List<ItemQuantityUpdateDto> itemQuantityUpdateDtos) {
+        for (ItemQuantityUpdateDto itemQuantityUpdateDto : itemQuantityUpdateDtos) {
+            Item item = itemRepository.findById(itemQuantityUpdateDto.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("not found item"));
+            item.updateStockQuantity(itemQuantityUpdateDto.getStockQuantity());
+        }
     }
 }

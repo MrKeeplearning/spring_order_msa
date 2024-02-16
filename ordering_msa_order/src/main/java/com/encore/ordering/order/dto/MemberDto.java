@@ -1,4 +1,4 @@
-package com.encore.ordering.order.domain;
+package com.encore.ordering.order.dto;
 
 import lombok.Data;
 
